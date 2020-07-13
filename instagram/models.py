@@ -10,6 +10,9 @@ class Post(models.Model):
     # upload_to 하위폴더만들어 저장하는 옵션
     photo = models.ImageField(blank=True, upload_to='instagram/post/%Y/%m/%d')
     tag_set = models.ManyToManyField('Tag', blank=True)
+    # ManyToManyField를 정의하면 별도의 컬럼이 만들어진다.
+    # DB Brower for sqlite3에서 파일을 열어 확인할 수 있다.
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
