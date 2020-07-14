@@ -1,7 +1,7 @@
-from django.views.generic import ListView
-from django.shortcuts import render
+from django.views.generic import DetailView, ListView
+from django.shortcuts import render, get_list_or_404
 from .models import Post
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404, HttpRequest
 
 post_list = ListView.as_view(model=Post)
 
@@ -22,12 +22,13 @@ post_list = ListView.as_view(model=Post)
 #         'post_list': qs,
 #         'q': q,
 #     })
+# def post_detail(request, pk):
+#     post = get_list_or_404(Post, pk =pk)
+#     return render(request, 'instagram/post_detail.html', {
+#         'post':post,
+#     })
 
-def post_detail(request, pk):
-    # return render(request, 'instagram/post_list.html')
-    response = HttpResponse()
-    response.write("Hello world!")
-    return response
+post_detail = DetailView.as_view(model=Post)
 
 
 def archives_year(request, year):  # UrlConf에서 받은 인자(year)를 반드시 넣어준다.
