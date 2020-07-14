@@ -28,3 +28,7 @@ def post_detail(request, pk):
     response = HttpResponse()
     response.write("Hello world!")
     return response
+
+
+def archives_year(request, year):  # UrlConf에서 받은 인자(year)를 반드시 넣어준다.
+    return HttpResponse(f"{year}년 archives")
