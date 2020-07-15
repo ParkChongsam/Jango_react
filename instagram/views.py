@@ -1,15 +1,25 @@
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render, get_list_or_404
 from .models import Post
 from django.http import HttpResponse, Http404, HttpRequest
 
-post_list = ListView.as_view(model=Post, paginate_by=2)
+# post_list = ListView.as_view(model=Post, paginate_by=2)
 
+
+# @method_decorator(login_required, name="dispatch")
 # class PostListView(ListView):
-#     model = Post
-# post_list = PostListView.as_view()
+class PostListView(LoginRequiredMixin, ListView):
+    model = Post
+    paginate_by = 2
 
 
+post_list = PostListView.as_view()
+
+
+# @login_required
 # def post_list(request):
 #     qs = Post.objects.all()
 #     q = request.GET.get('q', '')  # q라는 이름의 인자가 있으면 q를 반환, 없으면 None를 반환하기
@@ -27,6 +37,7 @@ post_list = ListView.as_view(model=Post, paginate_by=2)
 #     return render(request, 'instagram/post_detail.html', {
 #         'post':post,
 #     })
+
 
 class PostDetailView(DetailView):
     model = Post
