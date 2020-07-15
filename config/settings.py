@@ -59,7 +59,11 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'config', 'templates'),
+            # os.path.join(BASE_DIR, templates'),
+            # 바로 윗줄의 경우 Jango_React 바로 아래에 templates폴더를 만들어야 한다.
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

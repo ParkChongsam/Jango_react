@@ -16,6 +16,8 @@ class YearConverter:
 
 register_converter(YearConverter, 'year')
 
+app_name = 'instagram'
+
 urlpatterns = [
     path('', views.post_list),
     path('<int:pk>', views.post_detail),

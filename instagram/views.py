@@ -28,6 +28,17 @@ post_list = ListView.as_view(model=Post)
 #         'post':post,
 #     })
 
+class PostDetailView(DetailView):
+    model = Post
+
+    def get_queryset(self):
+        qs = super().get_queryset  # super 부모클래스의 함수 상속
+        # 그러니까 DetailView 클래스의 get_queryset 함수를 상속 받는다.
+        if not self.request.user.is_authenticated:  # 로그인 안한경우 공개된 문서만 보게하기
+            qs = qs.filter(is_public=True)
+        return qs
+
+
 post_detail = DetailView.as_view(model=Post)
 
 
