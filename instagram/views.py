@@ -3,7 +3,7 @@ from django.shortcuts import render, get_list_or_404
 from .models import Post
 from django.http import HttpResponse, Http404, HttpRequest
 
-post_list = ListView.as_view(model=Post)
+post_list = ListView.as_view(model=Post, paginate_by=2)
 
 # class PostListView(ListView):
 #     model = Post
