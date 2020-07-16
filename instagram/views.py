@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, ListView
+from django.views.generic import ArchiveIndexView, DayArchiveView, DetailView, ListView, MonthArchiveView, YearArchiveView
 from django.shortcuts import render, get_list_or_404
 from .models import Post
 from django.http import HttpResponse, Http404, HttpRequest
@@ -17,7 +17,6 @@ class PostListView(LoginRequiredMixin, ListView):
 
 
 post_list = PostListView.as_view()
-
 
 # @login_required
 # def post_list(request):
@@ -53,5 +52,17 @@ class PostDetailView(DetailView):
 post_detail = DetailView.as_view(model=Post)
 
 
-def archives_year(request, year):  # UrlConf에서 받은 인자(year)를 반드시 넣어준다.
-    return HttpResponse(f"{year}년 archives")
+# def archives_year(request, year):  # UrlConf에서 받은 인자(year)를 반드시 넣어준다.
+#     return HttpResponse(f"{year}년 archives")
+
+post_archive = ArchiveIndexView.as_view(
+    model=Post, date_field="created_at", paginate_by=2)
+
+post_archive_year = YearArchiveView.as_view(
+    model=Post, date_field="created_at", make_object_list=True)
+
+post_archive_month = MonthArchiveView.as_view(
+    model=Post, date_field="created_at")
+
+post_archive_day = DayArchiveView.as_view(
+    model=Post, date_field="created_at")
